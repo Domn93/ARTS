@@ -70,6 +70,14 @@ public class Array<E> {
         return data[index];
     }
 
+    public E getFirst() {
+        return data[0];
+    }
+
+    public E getLast() {
+        return data[size - 1];
+    }
+
     public void set(int index, E e) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed, Require index >= 0 and index < size");
@@ -96,7 +104,7 @@ public class Array<E> {
     }
 
     public E remove(int index) {
-        if (isEmpty()){
+        if (isEmpty()) {
             throw new IllegalStateException(" this array is empty");
         }
         if (index < 0 || index > size) {
@@ -106,7 +114,7 @@ public class Array<E> {
         if (size == data.length / 4 && data.length / 2 != 0) {
             resize(data.length / 2);
         }
-        for (int i = index; i < size-1; i++) {
+        for (int i = index; i < size - 1; i++) {
             data[i] = data[i + 1];
         }
         size--;
