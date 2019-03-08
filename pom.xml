@@ -7,6 +7,15 @@
     <groupId>com.mqz</groupId>
     <artifactId>ARTS</artifactId>
     <version>1.0</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <scope>system</scope>
+            <systemPath>${java.home}/../lib/tools.jar</systemPath>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -15,6 +24,24 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doclet>ExtractCommentsDoclet</doclet>
+                    <docletPath>${project.build.directory}/classes</docletPath>
+                    <reportOutputDirectory>${project.build.outputDirectory}/META-INF</reportOutputDirectory>
+                    <useStandardDocletOptions>false</useStandardDocletOptions>
                 </configuration>
             </plugin>
         </plugins>

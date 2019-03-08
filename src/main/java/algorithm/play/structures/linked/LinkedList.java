@@ -41,7 +41,7 @@ public class LinkedList<E> {
     private Node dummyHead;
     private int size;
 
-    LinkedList() {
+    public LinkedList() {
         this.dummyHead = new Node();
         this.size = 0;
     }

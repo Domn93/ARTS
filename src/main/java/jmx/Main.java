@@ -21,6 +21,11 @@ import java.util.concurrent.TimeUnit;
  *  参考https://blog.csdn.net/isea533/article/details/77431044
  */
 public class Main {
+    /**
+     * 执行测试main 方法
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
         MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
         ObjectName mBeanName = new ObjectName("jmx:type=Hello");
