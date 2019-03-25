@@ -40,7 +40,7 @@ public class BST<E extends Comparable<E>> {
 
 
     public void add(E e) {
-        add(root, e);
+        root = add(root, e);
     }
 
     public Node add(Node node, E e) {
@@ -72,43 +72,43 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
-    public void preOrder(E e) {
-        preOrder(root, e);
+    public void preOrder() {
+        preOrder(root);
     }
 
-    private void preOrder(Node node, E e) {
+    private void preOrder(Node node) {
         if (null == node) {
             return;
         }
         System.out.println(node.e);
-        preOrder(node.left, e);
-        preOrder(node.right, e);
+        preOrder(node.left);
+        preOrder(node.right);
     }
 
-    public void inOrder(E e) {
-        inOrder(root, e);
+    public void inOrder() {
+        inOrder(root);
     }
 
-    private void inOrder(Node node, E e) {
+    private void inOrder(Node node) {
         if (null == node) {
             return;
         }
-        preOrder(node.left, e);
+        inOrder(node.left);
         System.out.println(node.e);
-        preOrder(node.right, e);
+        inOrder(node.right);
     }
 
 
-    public void postOrder(E e) {
-        postOrder(root, e);
+    public void postOrder() {
+        postOrder(root);
     }
 
-    private void postOrder(Node node, E e) {
+    private void postOrder(Node node) {
         if (null == node) {
             return;
         }
-        preOrder(node.left, e);
-        preOrder(node.right, e);
+        postOrder(node.left);
+        postOrder(node.right);
         System.out.println(node.e);
     }
 
@@ -129,20 +129,158 @@ public class BST<E extends Comparable<E>> {
         }
     }
 
-    public void levelOrder(E e){
+    public void levelOrder() {
         LinkedListQueue<Node> queue = new LinkedListQueue<>();
         queue.enqueue(root);
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             Node node = queue.dequeue();
             System.out.println(node.e);
-            if (null != node.left){
+            if (null != node.left) {
                 queue.enqueue(node.left);
             }
-            if (null != node.right){
+            if (null != node.right) {
                 queue.enqueue(node.right);
             }
         }
     }
 
+    public E mininum() {
+        if (size == 0) {
+            throw new IllegalThreadStateException(" BST is empty");
+        }
+        Node minNode = mininum(root);
+        return minNode.e;
+    }
 
+    private Node mininum(Node node) {
+        if (null == node.left) {
+            return node;
+        }
+        return mininum(node.left);
+    }
+
+    public E maxnum() {
+        if (size == 0) {
+            throw new IllegalThreadStateException(" BST is empty");
+        }
+        Node maxNode = maxnum(root);
+        return maxNode.e;
+    }
+
+    private Node maxnum(Node node) {
+        if (null == node.right) {
+            return node;
+        }
+        return node.right;
+    }
+
+    public E removeMax() {
+        E maxnum = maxnum();
+        root = removeMax(root);
+        return maxnum;
+    }
+
+    private Node removeMax(Node node) {
+        if (null == node.right) {
+            Node leftNode = node.left;
+            node.left = null;
+            size--;
+            return leftNode;
+        }
+        node.right = removeMax(node.right);
+        return node;
+    }
+
+    public E removeMin() {
+        E minnum = mininum();
+        root = removeMin(root);
+        return minnum;
+    }
+
+    private Node removeMin(Node node) {
+        if (node.left == null) {
+            Node childRight = node.right;
+            node.right = null;
+            size--;
+            return childRight;
+
+        }
+        node.left = removeMin(node.left);
+        return node;
+    }
+
+
+    public void remove(E e) {
+        root = remove(root, e);
+    }
+
+    private Node remove(Node node, E e) {
+        if (node == null) {
+            return null;
+        }
+        if (e.compareTo(node.e) < 0) {
+            node.left = remove(node.left,e);
+            return node;
+        }else if (e.compareTo(node.e) > 0){
+            node.right = remove(node.right,e);
+            return node;
+        }else {
+            if (node.left == null){
+                Node rightNode = node.right;
+                size--;
+                node.right = null;
+                return rightNode;
+            }
+            if (node.right == null){
+                Node leftNode = node.left;
+                size--;
+                node.left = null;
+                return leftNode;
+            }
+            Node successor = removeMin(node.right);
+            successor.left = node.left;
+            successor.right = node.right;
+            node.left = node.right = null;
+            return successor;
+
+        }
+
+
+    }
+
+
+    public static void main(String[] args) {
+        BST<Integer> node = new BST();
+        node.add(6);
+        node.add(3);
+        node.add(4);
+        node.add(1);
+        node.add(9);
+        node.add(7);
+        node.add(8);
+        System.out.println(node.contains(4));
+        System.out.println(node.contains(5));
+        System.out.println("=========================");
+
+//        node.levelOrder();
+
+        System.out.println("=========================");
+//        node.preOrder();
+
+        System.out.println("=========================");
+//        node.inOrder();
+
+        System.out.println("=========================");
+//        node.postOrder();
+        System.out.println("=========================");
+//        System.out.println(node.mininum());
+//        System.out.println(node.maxnum());
+
+        System.out.println("=========================");
+        node.removeMax();
+        node.inOrder();
+        node.removeMax();
+        node.inOrder();
+
+    }
 }
