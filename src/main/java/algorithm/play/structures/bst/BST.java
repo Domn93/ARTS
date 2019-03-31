@@ -25,7 +25,7 @@ public class BST<E extends Comparable<E>> {
     private Node root;
     private int size;
 
-    BST() {
+    public BST() {
         this.root = null;
         this.size = 0;
     }

@@ -7,6 +7,7 @@ package algorithm.play.structures.linked;
  */
 public class LinkedList<E> {
 
+
     /**
      * Node数据内部类
      */
@@ -99,7 +100,7 @@ public class LinkedList<E> {
 
     // 获得链表的最后一个元素
     public E getLast() {
-        return get(size-1);
+        return get(size - 1);
     }
 
     public void set(int index, E e) {
@@ -144,14 +145,34 @@ public class LinkedList<E> {
     }
 
     public E removeLast() {
-        return remove(size-1);
+        return remove(size - 1);
     }
+
+
+    public void removeElement(E e) {
+        Node prev = dummyHead;
+        while (prev.next != null) {
+            Node cur = prev.next;
+            if (cur.e.equals(e)) {
+                break;
+            }
+            prev = cur;
+        }
+
+        if (prev.next != null) {
+            Node delNode = prev.next;
+            prev.next = delNode.next;
+            size--;
+            delNode.next = null;
+        }
+    }
+
 
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
         for (Node cur = dummyHead.next; cur != null; cur = cur.next) {
-            res.append(cur+"->");
+            res.append(cur + "->");
         }
         res.append("NULL");
         return res.toString();
