@@ -1,5 +1,7 @@
 package algorithm.play.structures.array;
 
+import javafx.beans.binding.ObjectExpression;
+
 /**
  * @author maqingze
  * @version v1.0
@@ -19,6 +21,14 @@ public class Array<E> {
 
     public Array() {
         this(8);
+    }
+
+    public Array(E[] arr) {
+        this.data = (E[]) new Object[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            data[i] = arr[i];
+        }
+        this.size = arr.length;
     }
 
     public int getSize() {
@@ -111,11 +121,11 @@ public class Array<E> {
             throw new IllegalArgumentException("Add failed, Require index >= 0 and index < size");
         }
         E ret = data[index];
-        if (size == data.length / 4 && data.length / 2 != 0) {
-            resize(data.length / 2);
-        }
         for (int i = index; i < size - 1; i++) {
             data[i] = data[i + 1];
+        }
+        if (size == data.length / 4 && data.length / 2 != 0) {
+            resize(data.length / 2);
         }
         size--;
         data[size] = null;
@@ -127,7 +137,7 @@ public class Array<E> {
     }
 
     public E removeLast() {
-        return remove(size);
+        return remove(size - 1 );
     }
 
     public void removeElement(E e) {
@@ -151,5 +161,14 @@ public class Array<E> {
         }
         res.append("]");
         return res.toString();
+    }
+
+    public void swap(int i, int j) {
+        if (i < 0 || i >= size || j < 0 || j >= size) {
+            throw new IllegalArgumentException("Index is illegal.");
+        }
+        E t = data[i];
+        data[i] = data[j];
+        data[j] = t;
     }
 }
